@@ -1,0 +1,60 @@
+{
+	"name": "org.tts.js.core",
+	"version": "0.1.0",
+	"title": "Javascript Core Libraries",
+	"description": "TTS Design's javascript core libraries for GScript, NodeJS & Browser implementations",
+	"license": "MIT",
+	"author": {
+		"name": "TTS Design",
+		"email": "ttsdesign@gmail.com",
+		"url": "https://github.com/ttsdesign"
+	},
+	"homepage": "https://github.com/ttsdesign/org.tts.js.core",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ttsdesign/org.tts.js.core.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ttsdesign/org.tts.js.core/issues"
+	},
+	"keywords": [
+		"TTS Design",
+		"Javascript"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"uglify-js": "3.3.24",
+		"commander": "2.15.1"
+	},
+	"main": "dist/org.tts.js.core.js",
+	"directories": {
+		"build": "./build",
+		"dist": "./dist",
+		"docs": "./docs",
+		"examples": "./examples",
+		"libs": "./libs",
+		"src": "./src",
+		"tests": "./tests",
+		"tools": "./tools"
+	},
+	"bin": {
+		"TTSMaker": "tools/TTSMake"
+	},
+	"scripts": {
+		"make": "node ${tools}/Make.js",
+		"docs": "start ${dist}/docs/index.html",
+		"examples": "start ${dist}/examples/index.html",
+		"test:browser": "start ${dist}/Tests.html",
+		"test": "node ${dist}/Tests.js"
+	},
+	"builds": {
+		"main": ["libs"],
+
+		"all": ["main", "docs", "examples", "tests"],
+		"clean": [],
+		"docs": ["main"],
+		"examples": ["main"],
+		"libs": [],
+		"tests": ["main"]
+	}
+}

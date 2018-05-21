@@ -1,0 +1,10 @@
+var s  = "Sample Text";
+var ss = s.Clone();
+Assert(s === ss.toString(), "Object.prototype.Clone(1)");
+s+="s";
+Assert(s !== ss.toString(), "Object.prototype.Clone(2)");
+var n = 11;
+var nn = n.Clone();
+Assert(n === nn.valueOf(), "Object.prototype.Clone(3)");
+n=5;
+Assert(n !== nn.valueOf(), "Object.prototype.Clone(4)");
