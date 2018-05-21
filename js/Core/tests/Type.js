@@ -1,6 +1,8 @@
-Assert(Type("Test") == "String", "Type(String)");
-Assert(Type(true) == "Boolean", "Type(Boolean)");
-Assert(Type(15) == "Number", "Type(Number)");
-Assert(Type([1,2]) == "Array", "Type(Array)");
-Assert(Type({a:1, b:2}) == "Object", "Type(Object)");
-Assert(Type(function () {}) == "Function", "Type(Function)");
+require("../src/index.js");
+
+Test.Equal(Type("Test"), "String", "Type(String)");
+Test.Equal(Type(true), "Boolean", "Type(Boolean)");
+Test.Equal(Type(15), "Number", "Type(Number)");
+Test.Equal(Type([1,2]), "Array", "Type(Array)");
+Test.Equal(Type({a:1, b:2}), "Object", "Type(Object)");
+Test.Equal(Type(function () {}), "Function", "Type(Function)");

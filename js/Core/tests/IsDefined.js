@@ -1,8 +1,10 @@
+require("../src/index.js");
+
 var d = "Defined";
-Assert(IsDefined(d) === true, "IsDefined(1)");
-Assert(IsDefined(5) === true, "IsDefined(2)");
+Test.Equal(IsDefined(d) === true, "IsDefined");
+Test.Equal(IsDefined === true, "IsDefined");
 var nd;
-Assert(IsDefined(nd) === false, "IsDefined(3)");
-Assert(IsDefined(undefined) === false, "IsDefined(4)");
-Assert(IsDefined(null) === false, "IsDefined(5)");
+Test.Equal(IsDefined(nd) === false, "IsDefined");
+Test.Equal(IsDefined(undefined) === false, "IsDefined");
+Test.Equal(IsDefined(null) === false, "IsDefined");
 

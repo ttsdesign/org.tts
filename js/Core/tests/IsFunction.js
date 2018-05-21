@@ -1,2 +1,4 @@
-Assert(IsFunction(function TestFunc () {}) == true, "IsFunction(1)");
-Assert(IsFunction("Test String") == false, "IsFunction(2)");
+require("../src/index.js");
+
+Test.Ok(IsFunction(function TestFunc () {}), "IsFunction");
+Test.Ok(!IsFunction("Test String"), "IsFunction");

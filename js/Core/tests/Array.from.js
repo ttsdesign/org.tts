@@ -1,15 +1,17 @@
+require("../src/index.js");
+
 var arr = Array.from((function () {return arguments})("one", 2, function Three () {}));
-Assert(Type(arr) === "Array", "Array.from(1)");
-Assert(arr.length === 3, "Array.from(2)");
+Test.Equal(Type(arr), "Array", "Array.from");
+Test.Equal(arr.length, 3, "Array.from");
 
 var arr = Array.from({a:"one", b: 2, CC: function Three () {}});
-Assert(Type(arr) === "Array", "Array.from(3)");
-Assert(arr.length === 3, "Array.from(4)");
+Test.Equal(Type(arr), "Array", "Array.from");
+Test.Equal(arr.length, 3, "Array.from");
 
 var arr = Array.from(["one", 2, function Three () {}]);
-Assert(Type(arr) === "Array", "Array.from(5)");
-Assert(arr.length === 3, "Array.from(6)");
+Test.Equal(Type(arr), "Array", "Array.from");
+Test.Equal(arr.length, 3, "Array.from");
 
 var arr = Array.from("one", 2, function Three () {});
-Assert(Type(arr) === "Array", "Array.from(7)");
-Assert(arr.length === 3, "Array.from(8)");
+Test.Equal(Type(arr), "Array", "Array.from");
+Test.Equal(arr.length, 3, "Array.from");

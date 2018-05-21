@@ -1,7 +1,8 @@
-var r = new Date.Range(0);
-Assert(r.Beg.valueOf() === r.End.valueOf(), "Date.Range(1)");
-Assert(r.Within(new Date()) === false, "Date.Range(2)");
+require("../src/index.js");
+
+var r = new Date.Range(new Date(0), new Date(0));
+Test.IsEqual(r.Beg.valueOf(), r.End.valueOf(), "Date.Range");
+Test.Ok(!r.Within(new Date()), "Date.Range");
 r = new Date.Range(1526547053735, 1526287985966);
-Assert(r.Within(1526547053735-Date.DAY) === true, "Date.Range(3)");
-Assert(r.Within(new Date()) === false, "Date.Range(4)");
+Test.Ok(r.Within(1526547053735-Date.DAY), "Date.Range");
 

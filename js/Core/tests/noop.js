@@ -1,5 +1,7 @@
+require("../src/index.js");
+
 try {
 	noop()
 } catch (e) {
-	Assert(false, "noop("+e+")")
+	LOG("noop("+e+")")
 }

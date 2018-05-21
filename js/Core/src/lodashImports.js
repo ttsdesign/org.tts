@@ -927,12 +927,32 @@
 			});
 		}
 
+		if (!Array.prototype.hasOwnProperty("Difference")) {
+			Object.defineProperty(Array.prototype, "Difference", {
+				configurable: false,
+				enumerable: false,
+				value: function (a) {
+					return Array.Difference(this, a)
+				}
+			});
+		}
+
 		if (!Array.hasOwnProperty("DifferenceBoth")) {
 			Object.defineProperty(Array, "DifferenceBoth", {
 				configurable: false,
 				enumerable: false,
 				value: function (a, b) {
 					return Array.Difference(a, b).concat(Array.Difference(b, a));
+				}
+			});
+		}
+
+		if (!Array.prototype.hasOwnProperty("DifferenceBoth")) {
+			Object.defineProperty(Array.prototype, "DifferenceBoth", {
+				configurable: false,
+				enumerable: false,
+				value: function (a) {
+					return Array.DifferenceBoth(this, a)
 				}
 			});
 		}
@@ -945,6 +965,17 @@
 			});
 		}
 
+		if (!Array.prototype.hasOwnProperty("Intersection")) {
+			Object.defineProperty(Array.prototype, "Intersection", {
+				configurable: false,
+				enumerable: false,
+				value: function (a) {
+					return Array.Intersection(this, a)
+				}
+			});
+		}
+
+
 		if (!Array.hasOwnProperty("Union")) {
 			Object.defineProperty(Array, "Union", {
 				configurable: false,
@@ -952,6 +983,17 @@
 				value: union
 			});
 		}
+
+		if (!Array.prototype.hasOwnProperty("Union")) {
+			Object.defineProperty(Array.prototype, "Union", {
+				configurable: false,
+				enumerable: false,
+				value: function (a) {
+					return Array.Union(this, a)
+				}
+			})
+		}
+
 
 		if (!NS.hasOwnProperty("Clone")) {
 			Object.defineProperty(NS, "Clone", {

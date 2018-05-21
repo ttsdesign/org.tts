@@ -1,3 +1,3 @@
-var a = [1,2,3,4];
-var b = [3,4,5,6];
-Assert(a.Difference(b).length === 2, "Array.Difference(1)");
+require("../src/index.js");
+
+Test.IsEqual([1,2,3,4].Difference([3,4,5,6]), [5,6], "Array.Difference");

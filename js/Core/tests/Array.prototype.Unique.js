@@ -1,4 +1,5 @@
-Assert([1,2,2,3,3,4].Unique().length === 4, "Array.prototype.Unique(1)");
-Assert([].Unique().length === 0, "Array.prototype.Unique(2)");
-Assert([1,2,3,4].Unique().length === 4, "Array.prototype.Unique(3)");
+require("../src/index.js");
+
+Test.IsEqual([1,2,2,3,3,4].Unique(), [1,2,3,4], "Array.prototype.Unique");
+Test.IsEqual([].Unique(), [], "Array.prototype.Unique");
 

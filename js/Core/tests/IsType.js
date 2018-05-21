@@ -1,13 +1,15 @@
-Assert(IsType("Test", "String") == true, "IsType(String)");
-Assert(IsType(true, "Boolean") == true, "IsType(Boolean)");
-Assert(IsType((15), "Number") == true, "IsType(Number)");
-Assert(IsType([1,2], "Array") == true, "IsType(Array)");
-Assert(IsType({a:1, b:2}, "Object") == true, "IsType(Object)");
-Assert(IsType((function TestFunc () {}), "Function") == true, "IsType(Function)");
+require("../src/index.js");
 
-Assert(IsType("Test", "Boolean") == false, "IsType(Boolean1)");
-Assert(IsType(true, "Number") == false, "IsType(Number1)");
-Assert(IsType((15), "Array") == false, "IsType(Array1)");
-Assert(IsType([1,2], "Object") == false, "IsType(Object1)");
-Assert(IsType({a:1, b:2}, "Function") == false, "IsType(Function1)");
-Assert(IsType((function TestFunc () {}), "String") == false, "IsType(String1)");
+Test.Ok(IsType("Test", "String"), "IsType(String)");
+Test.Ok(IsType(true, "Boolean"), "IsType(Boolean)");
+Test.Ok(IsType((15), "Number"), "IsType(Number)");
+Test.Ok(IsType([1,2], "Array"), "IsType(Array)");
+Test.Ok(IsType({a:1, b:2}, "Object"), "IsType(Object)");
+Test.Ok(IsType((function TestFunc () {}), "Function"), "IsType(Function)");
+
+Test.Ok(!IsType("Test", "Boolean"), "IsType(Boolean1)");
+Test.Ok(!IsType(true, "Number"), "IsType(Number1)");
+Test.Ok(!IsType((15), "Array"), "IsType(Array1)");
+Test.Ok(!IsType([1,2], "Object"), "IsType(Object1)");
+Test.Ok(!IsType({a:1, b:2}, "Function"), "IsType(Function1)");
+Test.Ok(!IsType((function TestFunc () {}), "String"), "IsType(String1)");

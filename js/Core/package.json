@@ -1,5 +1,5 @@
 {
-	"name": "org.tts.js.core",
+	"name": "js-core",
 	"version": "0.1.0",
 	"title": "Javascript Core Libraries",
 	"description": "TTS Design's javascript core libraries for GScript, NodeJS & Browser implementations",
@@ -9,13 +9,13 @@
 		"email": "ttsdesign@gmail.com",
 		"url": "https://github.com/ttsdesign"
 	},
-	"homepage": "https://github.com/ttsdesign/org.tts.js.core",
+	"homepage": "https://github.com/ttsdesign/org.tts/tree/master/js/Core",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ttsdesign/org.tts.js.core.git"
+		"url": "https://github.com/ttsdesign/org.tts.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ttsdesign/org.tts.js.core/issues"
+		"url": "https://github.com/ttsdesign/org.tts/issues"
 	},
 	"keywords": [
 		"TTS Design",

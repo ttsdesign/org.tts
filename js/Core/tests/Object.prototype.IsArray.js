@@ -1,8 +1,8 @@
-Assert("Test".IsArray() == false, "IsArray(String)");
-Assert(true.IsArray() == false, "IsArray(Boolean)");
-var n = 15;
-Assert(n.IsArray() == false, "IsArray(Number)");
-Assert([1,2].IsArray() == true, "IsArray(Array)");
-Assert({a:1, b:2}.IsArray() == false, "IsArray(Object)");
-function TestFunc () {}
-Assert(TestFunc.IsArray() == false, "IsArray(Function)");
+require("../src/index.js");
+
+Test.Equal(!"Test".IsArray(), "IsArray(String)");
+Test.Equal(!true.IsArray(), "IsArray(Boolean)");
+Test.Equal(!15..IsArray(), "IsArray(Number)");
+Test.Equal([1,2].IsArray(), "IsArray(Array)");
+Test.Equal(!{a:1, b:2}.IsArray(), "IsArray(Object)");
+Test.Equal(!(function TestFunc () {}).IsArray(), "IsArray(Function)");

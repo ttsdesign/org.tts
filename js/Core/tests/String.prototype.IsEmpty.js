@@ -1,3 +1,5 @@
-Assert("".IsEmpty() == true, "String.prototype.IsEmpty(1)");
-Assert("Text String".IsEmpty() == false, "String.prototype.IsEmpty(2)");
-Assert(String.prototype.IsEmpty.call(undefined) == false, "String.prototype.IsEmpty(3)");
+require("../src/index.js");
+
+Test.Ok("".IsEmpty(), "String.prototype.IsEmpty");
+Test.Ok(!"Text String".IsEmpty(), "String.prototype.IsEmpty");
+Test.Ok(!String.prototype.IsEmpty.call(undefined), "String.prototype.IsEmpty");

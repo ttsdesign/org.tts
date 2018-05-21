@@ -5,7 +5,6 @@
 * Relative(from, to)
 * Resolve()
 */
-
 (function(NS) {
 	var _Path = {
 		"Directory": function (path) {

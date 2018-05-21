@@ -1,13 +1,15 @@
-Assert("Test".IsType("String") == true, "Object.prototype.IsType(String)");
-Assert(true.IsType("Boolean") == true, "Object.prototype.IsType(Boolean)");
-Assert((15).IsType("Number") == true, "Object.prototype.IsType(Number)");
-Assert([1,2].IsType("Array") == true, "Object.prototype.IsType(Array)");
-Assert({a:1, b:2}.IsType("Object") == true, "Object.prototype.IsType(Object)");
-Assert((function TestFunc () {}).IsType("Function") == true, "Object.prototype.IsType(Function)");
+require("../src/index.js");
 
-Assert("Test".IsType("Number") == false, "Object.prototype.IsType(Number1)");
-Assert(true.IsType("String") == false, "Object.prototype.IsType(Boolean1)");
-Assert((15).IsType("Object") == false, "Object.prototype.IsType(Object1)");
-Assert([1,2].IsType("Boolean") == false, "Object.prototype.IsType(Boolean1)");
-Assert({a:1, b:2}.IsType("Function") == false, "Object.prototype.IsType(Function1)");
-Assert((function TestFunc () {}).IsType("Array") == false, "Object.prototype.IsType(Array1)");
+Test.Ok("Test".IsType("String"), "Object.prototype.IsType(String)");
+Test.Ok(true.IsType("Boolean"), "Object.prototype.IsType(Boolean)");
+Test.Ok((15).IsType("Number"), "Object.prototype.IsType(Number)");
+Test.Ok([1,2].IsType("Array"), "Object.prototype.IsType(Array)");
+Test.Ok({a:1, b:2}.IsType("Object"), "Object.prototype.IsType(Object)");
+Test.Ok((function TestFunc () {}).IsType("Function"), "Object.prototype.IsType(Function)");
+
+Test.Ok("Test".IsType("Number"), "Object.prototype.IsType(Number)");
+Test.Ok(true.IsType("String"), "Object.prototype.IsType(Boolean)");
+Test.Ok((15).IsType("Object"), "Object.prototype.IsType(Object)");
+Test.Ok([1,2].IsType("Boolean"), "Object.prototype.IsType(Boolean)");
+Test.Ok({a:1, b:2}.IsType("Function"), "Object.prototype.IsType(Function)");
+Test.Ok((function TestFunc () {}).IsType("Array"), "Object.prototype.IsType(Array)");
