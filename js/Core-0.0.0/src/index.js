@@ -1,6 +1,7 @@
 const Fs = require("fs");
 
 GetFiles(__dirname).forEach(function (f) {
+	//console.log(f);
 	require(f);
 });
 

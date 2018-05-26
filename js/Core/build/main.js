@@ -1,85 +1,77 @@
 
 var sources = {
 	"lang": [
-		"src/lodash.js",
-		"src/lang/Assert.js",
-		//"src/lang/Clone.js",
-		"src/lang/IsArray.js",
-		"src/lang/IsDefined.js",
-		//"src/lang/IsEqual.js",
-		"src/lang/IsFunction.js",
-		"src/lang/IsType.js",
-		"src/lang/noop.js",
-		"src/lang/Type.js"
+		"src/Clone.js",
+		"src/GetContext.js",
+		"src/IsArray.js",
+		"src/IsDefined.js",
+		"src/IsEqual.js",
+		"src/IsFunction.js",
+		"src/IsType.js",
+		"src/lodashImports.js",
+		"src/Logger.js",
+		"src/noop.js",
+		"src/Type.js"
 	],
 	"String": [
-		"src/lang/String/Base64.js",
-		"src/lang/String/EndsWith.js",
-		"src/lang/String/Escape.js",
-		"src/lang/String/Hash.js",
-		"src/lang/String/IsEmpty.js",
-		"src/lang/String/Match.js",
-		"src/lang/String/StartsWith.js",
-		"src/lang/String/ToMatch.js",
-		"src/lang/String/Unescape.js"
+		"src/String/Base64.js",
+		"src/String/EndsWith.js",
+		"src/String/Escape.js",
+		"src/String/Hash.js",
+		"src/String/IsEmpty.js",
+		"src/String/Match.js",
+		"src/String/StartsWith.js",
+		"src/String/ToMatch.js",
+		"src/String/Unescape.js"
 	],
 	"Array": [
-		//"src/lang/Array/Difference.js",
-		"src/lang/Array/from.js",
-		//"src/lang/Array/Intersection.js",
-		//"src/lang/Array/Union.js",
-
-		"src/lang/Array/RemoveElement.js",
-		"src/lang/Array/RemoveIndex.js",
-		"src/lang/Array/ToObject.js",
-		"src/lang/Array/Unique.js"
+		"src/Array/from.js",
+		"src/Array/RemoveElement.js",
+		"src/Array/RemoveIndex.js",
+		"src/Array/ToObject.js",
+		"src/Array/Unique.js"
 	],
 	"Object": [
-		"src/lang/Object/Type.js",
-		"src/lang/Object/Clone.js",
-		"src/lang/Object/Contains.js",
-		"src/lang/Object/Extend.js",
-		"src/lang/Object/IsArray.js",
-		"src/lang/Object/IsFunction.js",
-		"src/lang/Object/IsType.js",
-		"src/lang/Object/Join.js",
+		"src/Object/Clone.js",
+		"src/Object/Contains.js",
+		"src/Object/Extend.js",
+		"src/Object/IsArray.js",
+		"src/Object/IsFunction.js",
+		"src/Object/IsType.js",
+		"src/Object/Join.js",
+		"src/Object/Type.js"
 	],
 	"Date": [
-		"src/lang/Date/Constants.js",
-		"src/lang/Date/Range.js",
-		"src/lang/Date/Span.js"
+		"src/Date/Constants.js",
+		"src/Date/Range.js",
+		"src/Date/Span.js"
 	],
-	"Platform": [
-		"src/Platform/GetContext.js",
-		"src/Platform/Logger.js"
-	],
-	"Fs": [
-		"src/Fs/Path.js"
-	],
-	"Net": [
-		"src/Net/QueryString.js"
+	"Util": [
+		"src/Path.js",
+		"src/QueryString.js",
+		"src/Test.js"
 	]
 };
-var outputFile = "dist/org.tts.js.core-$VERSION$.js";
 
 //////////////////////////////////////////////////////////////////////////////////
 ///// Nothing to Edit Below ////////////////////////////////////////////////////
-Path = require("path");
-Fs = require("fs");
-Uglify = require("uglify-js");
+path = require("path");
+fs = require("fs");
+uglifyjs = require("uglify-es");
 
-var version = Fs.readFileSync(".version", "utf8").trim();
-outputFile = outputFile.replace(/\$VERSION\$/, version);
+let pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+let outputFile = pkg.main.replace(/\.js$/, "."+pkg.version+".js");
 
 var code = {global:{}, ns:{}};
 Object.keys(sources).forEach(function (m) {
 	sources[m].forEach(function (f) {
-		var source = Fs.readFileSync(f, "utf8");
+		var source = fs.readFileSync(f, "utf8");
+		source = source.replace(/.*?\s*\=*\s*require\(.*?\);/g, "");
 
 		if ((source.match(/\(function( )*\(NS\)( )*\{/) != null) && (source.match(/\}( )*\(typeof window !== "undefined" \? window : \(typeof global !== "undefined"\) \? global : this\)\);/) != null)) {
-			code.ns[f.substr(f.lastIndexOf("/")+1)] = Uglify.minify(source.replace(/\(function( )*\(NS\)( )*\{/, "").replace(/\}( )*\(typeof window !== "undefined" \? window : \(typeof global !== "undefined"\) \? global : this\)\);/, ""), {compress: {keep_fnames:true, dead_code:false}, mangle: {keep_fnames:true}});
+			code.ns[f.substr(f.lastIndexOf("/")+1)] = uglifyjs.minify(source.replace(/\(function( )*\(NS\)( )*\{/, "").replace(/\}( )*\(typeof window !== "undefined" \? window : \(typeof global !== "undefined"\) \? global : this\)\);/, ""), {compress: {keep_fnames:true, dead_code:false}, mangle: {keep_fnames:true}});
 		} else {
-			code.global[f.substr(f.lastIndexOf("/")+1)] = Uglify.minify(source, {compress: {keep_fnames:true, dead_code:false}, mangle: {keep_fnames:true}});
+			code.global[f.substr(f.lastIndexOf("/")+1)] = uglifyjs.minify(source, {compress: {keep_fnames:true, dead_code:false}, mangle: {keep_fnames:true}});
 		}
 	});
 });
@@ -98,8 +90,12 @@ Object.keys(code.ns).forEach(function (f) {
 });
 output += "}(typeof window !== \"undefined\" ? window : (typeof global !== \"undefined\") ? global : this));\n";
 
+var preamble = "/* "+pkg.name+" v"+pkg.version+"\r\n*  "+pkg.title+"\r\n*  "+pkg.description+"\r\n*  "+pkg.author.name+" ("+pkg.author.email+")\r\n*/\r\n";
+fs.writeFileSync(outputFile, output, "utf8");
+fs.writeFileSync(outputFile.replace(/\.js$/, ".min.js"), preamble+uglifyjs.minify(output, {compress: {keep_fnames:true}, mangle: {keep_fnames:true}}).code, "utf8");
+fs.copyFileSync(outputFile.replace(/\.js$/, ".min.js"), pkg.main);
 
-Fs.writeFileSync(outputFile, output, "utf8");
-Fs.writeFileSync(outputFile.replace(/\.js$/, ".min.js"), Uglify.minify(output, {compress: {keep_fnames:true}, mangle: {keep_fnames:true}}).code, "utf8");
-
-
+if (process.argv.includes("install")) {
+	let installDir = process.env.NODE_PATH.split(";").pop();
+	fs.copyFileSync(pkg.main, installDir+"/"+path.basename(pkg.main));
+}

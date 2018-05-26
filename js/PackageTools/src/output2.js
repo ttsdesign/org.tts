@@ -1,0 +1,1 @@
+Contents of Sample2.js
