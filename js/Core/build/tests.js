@@ -1,32 +1,18 @@
+if (process.cwd().endsWith("build")) {process.chdir("..")}
 
-var sources = [
-	 "dist/org.tts.js.core-$VERSION$.min.js"
-];
-var outputFile = "dist/Tests-$VERSION$.js";
-var testHelpersFile = "build/test_helpers.js";
+path = require("path");
+fs = require("fs");
+uglifyjs = require("uglify-es");
 
-//////////////////////////////////////////////////////////////////////////////////
-///// Nothing to Edit Below ////////////////////////////////////////////////////
-Path = require("path");
-Fs = require("fs");
-Uglify = require("uglify-js");
+let pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+let libSrc = fs.readFileSync(pkg.main.replace(/\.js$/, "."+pkg.version+".min.js"), "utf8");
 
-var version = Fs.readFileSync(".version", "utf8").trim();
-
-var helpersCode = "Object.keys(Tests).forEach(function (f) {\r\n\tTests[f]();\r\n});"
-
-var sourcesCode = [];
-sources.forEach(function (f) {
-	sourcesCode.push(Fs.readFileSync(f.replace(/\$VERSION\$/, version), "utf8"))
-});
-
-var tests = [];
-Fs.readdirSync("tests").forEach(function (f) {
-	if (Fs.statSync("tests/"+f).isFile()) {
-		tests.push("Tests[\""+f.split(".")[0] + "\"] = function () {\r\n\t" + Fs.readFileSync("tests/"+f, "utf8").replace(/\r*\n\r*\n/g, "\r\n").replace(/\n$/, "").replace(/\n/g, "\n\t") + "\r\n}");
+let tests = [];
+fs.readdirSync("tests").forEach(function (f) {
+	if (fs.statSync("tests/"+f).isFile()) {
+		tests.push("Tests[\""+f.substr(0, f.lastIndexOf(".")) + "\"] = function () {\r\n\t" + fs.readFileSync("tests/"+f, "utf8").replace(/.*?\s*\=*\s*require\(.*?\);/g, "").replace(/\r*\n\r*\n/g, "\r\n").replace(/^\r*\n/, "").replace(/\n$/, "").replace(/\n/g, "\n\t") + "\r\n}");
 	}
 });
 
-outputFile = outputFile.replace(/\$VERSION\$/, version);
-var output = sourcesCode.join("\r\n\r\n") + "\r\n\r\n" + "var Tests = {};" + "\r\n\r\n" + tests.join("\r\n") + "\r\n" + helpersCode;
-Fs.writeFileSync(outputFile, output, "utf8");
+var output = libSrc + "\r\n\r\n" + "var Tests = {};" + "\r\n\r\n" + tests.join("\r\n") + "\r\n" + "Object.keys(Tests).forEach(function (f) {\r\n\tTests[f]();\r\n});\r\nLOG(\"Results: Pass(\"+Test.Passes+\")/Fail(\"+Test.Fails+\")\");";
+fs.writeFileSync(pkg.main.replace(/\.js$/, "."+pkg.version+".js").replace(/\.js$/, ".test.js"), output, "utf8");

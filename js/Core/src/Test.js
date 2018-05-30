@@ -5,10 +5,14 @@ require("./lodashImports.js");
 
 (function(NS) {
 
-	let count = 0, errFails = false, logFail = true, logPass = true;
+	let errFails = false, logFail = true, logPass = true;
+	let count = 0, failCount = 0, passCount = 0;
 
 	function LogTest (status, message) {
 		count++;
+		if (status) {passCount++}
+		else {failCount++}
+
 		if (errFails && !status) {
 			throw typeof Error !== 'undefined' ? new Error(message || "Assertion Failed") : message;
 		}
@@ -46,6 +50,14 @@ require("./lodashImports.js");
 		set: function (v) {count = v; return this}
 	});
 
+	Object.defineProperty(Test, "Passes", {enumerable: false, configurable: false, 
+		get: function () {return passCount}
+	});
+
+	Object.defineProperty(Test, "Fails", {enumerable: false, configurable: false, 
+		get: function () {return failCount}
+	});
+
 
 	Object.defineProperty(Test, "Equal", {enumerable: false, configurable: false, value: function (actual, expected, message) {
 		return LogTest(actual === expected, message)
@@ -57,6 +69,10 @@ require("./lodashImports.js");
 
 	Object.defineProperty(Test, "Ok", {enumerable: false, configurable: false, value: function (actual, message) {
 		return LogTest(!!actual, message);
+	}});
+
+	Object.defineProperty(Test, "Not", {enumerable: false, configurable: false, value: function (actual, message) {
+		return LogTest(!actual, message);
 	}});
 
 	if (!NS.hasOwnProperty("Test")) {

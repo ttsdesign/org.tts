@@ -3,7 +3,7 @@ if (!String.prototype.hasOwnProperty("IsEmpty")) {
 		configurable: false,
 		enumerable: false,
 		value: function () {
-			return (this.length === 0)
+			return !this || (this.length === 0)
 		}
 	});
 }
